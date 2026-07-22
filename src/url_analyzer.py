@@ -27,3 +27,22 @@ def has_many_subdomains(url):
     parts = host.split(".")
     return len(parts) > 4
     
+def url_analysis(url):
+
+    reasons = []
+
+    if uses_ip_address(url):
+        reasons.append("Uses a raw IP address instead of a domain name.")
+
+    if has_userinfo(url):
+        reasons.append("The link is hiding the real destination behind a '@'.")
+
+    if has_many_subdomains(url):
+        reasons.append("The URL has a suspicious amount of subdomains.")
+
+    score = len(reasons)
+    return {
+        "url" : url, 
+        "score" : score,
+        "reasons" : reasons,
+    }
