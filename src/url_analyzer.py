@@ -26,7 +26,16 @@ def has_many_subdomains(url):
     
     parts = host.split(".")
     return len(parts) > 4
+
+#see how many - are there IN THE SUBDOMAIN LABELS
+def has_many_hyphens(url):
+    host = urlparse(url).hostname
+    if host is None:
+        return False
     
+    parts = 
+
+#giving the user a rundown of the URL issues (if any)    
 def url_analysis(url):
 
     reasons = []
