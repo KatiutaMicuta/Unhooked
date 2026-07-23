@@ -1,4 +1,5 @@
 from urllib.parse import urlparse
+import tldextract
 
 #checking if the url is an IP address
 def uses_ip_address(url):
@@ -27,13 +28,11 @@ def has_many_subdomains(url):
     parts = host.split(".")
     return len(parts) > 4
 
-#see how many - are there IN THE SUBDOMAIN LABELS
+#see how many - are there in the subdomain
 def has_many_hyphens(url):
-    host = urlparse(url).hostname
-    if host is None:
-        return False
     
-    parts = 
+    labels = tldextract.extract(url)
+    return labels.domain.count("-") > 2
 
 #giving the user a rundown of the URL issues (if any)    
 def url_analysis(url):
@@ -48,6 +47,9 @@ def url_analysis(url):
 
     if has_many_subdomains(url):
         reasons.append("The URL has a suspicious amount of subdomains.")
+
+    if has_many_hyphens(url):
+        reasons.append("The URL has a suspicious amount of hyphens (over 2).")
 
     score = len(reasons)
     return {
