@@ -2,11 +2,7 @@ from urllib.parse import urlparse
 import tldextract
 
 #checking if the url is an IP address
-def uses_ip_address(url):
-
-    host = urlparse(url).hostname
-    if host is None: 
-        return False  
+def uses_ip_address(host): 
     
     parts = host.split(".")
     
@@ -19,11 +15,7 @@ def has_userinfo(url):
     return "@" in netloc
 
 #if URL has more than 4 subdomains it's usually suspicious
-def has_many_subdomains(url):
-    
-    host = urlparse(url).hostname
-    if host is None:
-        return False
+def has_many_subdomains(host):
     
     parts = host.split(".")
     return len(parts) > 4
@@ -37,18 +29,23 @@ def has_many_hyphens(url):
 #giving the user a rundown of the URL issues (if any)    
 def url_analysis(url):
 
+    host = urlparse(url).hostname
+
+    if host is None:
+        return False
+
     reasons = []
 
-    if uses_ip_address(url):
+    if uses_ip_address(host):
         reasons.append("Uses a raw IP address instead of a domain name.")
 
     if has_userinfo(url):
         reasons.append("The link is hiding the real destination behind a '@'.")
 
-    if has_many_subdomains(url):
+    if has_many_subdomains(host):
         reasons.append("The URL has a suspicious amount of subdomains.")
 
-    if has_many_hyphens(url):
+    if has_many_hyphens(host):
         reasons.append("The URL has a suspicious amount of hyphens (over 2).")
 
     score = len(reasons)
