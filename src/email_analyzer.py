@@ -1,6 +1,7 @@
 from src.url_analyzer import has_many_hyphens
 from src.url_analyzer import uses_ip_address
 from src.url_analyzer import has_many_subdomains
+import tldextract
 
 def email_domain(email):
 
@@ -17,7 +18,7 @@ def email_analysis(email, text):
     if domain is None:
         return False
 
-    score = 0
+    score = 0 
     reasons = []
 
     if uses_ip_address(domain):
@@ -68,4 +69,13 @@ def urgent_language(text):
     text = text.lower()
     return any(phrase in text for phrase in keywords)
 
- 
+def link_mismatch(display_text, href):
+
+    display_text = tldextract.extract(display_text).registered_domain
+
+    if display_text == "":
+        return False
+    
+    href = tldextract.extract(href).registered_domain
+
+    return display_text != href
