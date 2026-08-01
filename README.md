@@ -3,7 +3,7 @@
 A phishing detector for links and emails. Paste a URL or an email and it reports
 a risk score plus a plain-English list of what looks wrong.
 
-![Unhooked catching a phishing email](assets/demo-bad-email.gif)
+![Unhooked catching a phishing email](assets/demo-phishing-email.gif)
 
 ## The idea
 
