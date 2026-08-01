@@ -77,12 +77,12 @@ def urgent_language(text):
 
 def link_mismatch(display_text, href):
 
-    display_text = tldextract.extract(display_text).registered_domain
+    display_text = tldextract.extract(display_text).top_domain_under_public_suffix
 
-    if display_text == "":
+    if display_text == "" or href is None:
         return False
     
-    href = tldextract.extract(href).registered_domain
+    href = tldextract.extract(href).top_domain_under_public_suffix
     return display_text != href
     
 
